@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhang.web.modules.sys.mapper.SysUserMapper">
+	<resultMap type="com.zhang.web.modules.sys.entity.SysUser" id="userAndRoleResultMap">
+		<id column="userId" property="userId"/>
+		<result column="username" property="username"/>
+		<result column="password" property="password"/>
+		<result column="realName" property="realName"/>
+		<result column="roleId" property="roleId"/>
+		<result column="lastLoginDate" property="lastLoginDate"/>
+		<result column="lastLoginIp" property="lastLoginIp"/>
+		<result column="status" property="status"/>
+		<result column="email" property="email"/>
+		<result column="phone" property="phone"/>
+		<result column="registDate" property="registDate"/>
+		<association property="role" select="com.zhang.web.modules.sys.mapper.SysRoleMapper.loadRoleById" column="roleId" javaType="Role" />
+	</resultMap>
+
+	<sql id="Field">
+		userId,
+		username,
+		password,
+		realName,
+		roleId,
+		lastLoginDate,
+		lastLoginIp,
+		status,
+		email,
+		phone,
+		registDate
+	</sql>
+
+    <!-- 查询所有用户 -->
+    <select id="selectAll"  resultType="com.zhang.web.modules.sys.entity.SysUser" resultMap="userAndRoleResultMap">
+        SELECT
+        <include refid="Field"></include>
+        FROM
+        sys_user
+    </select>
+
+    <!-- 通过userId获取数据 -->
+    <select id="selectById"  resultType="com.zhang.web.modules.sys.entity.SysUser" >
+        SELECT
+        <include refid="Field"></include>
+        FROM
+        sys_user
+        WHERE
+        userId = #{userId}
+    </select>
+
+
+
+	<!-- 通过USERNAME获取数据 -->
+	<select id="loadUserRoleAndPermissionByUsername"  resultMap="userAndRoleResultMap" >
+		SELECT
+		<include refid="Field"></include>
+		FROM
+			sys_user
+		WHERE
+			username = #{username}
+	</select>
+
+	<!-- 通过USERNAME获取数据 -->
+	<select id="loadUserByUsername"  resultType="com.zhang.web.modules.sys.entity.SysUser" resultMap="userAndRoleResultMap">
+		SELECT
+		<include refid="Field"></include>
+		FROM
+		sys_user
+		WHERE
+		username = #{username}
+	</select>
+
+	<!--用户登录，更新相关信息-->
+	<update id="loginUser" parameterType="com.zhang.web.modules.sys.entity.SysUser">
+		update sys_user set lastLoginDate=NOW(), lastLoginIp=#{lastLoginIp} where userId=#{userId}
+	</update>
+
+    <!--更改用户状态-->
+    <update id="updateUserStatusById" parameterType="com.zhang.web.modules.sys.entity.SysUser">
+		update sys_user set status=#{status} where userId=#{userId}
+	</update>
+
+
+	<update id="updateUserByUsername" parameterType="com.zhang.web.modules.sys.entity.SysUser">
+		update sys_user set
+			username=#{username},
+			password=#{password},
+			realName=#{realName},
+			roleId=#{roleId},
+			status=#{status},
+			email=#{email},
+			phone=#{phone},
+			registDate=#{registDate}
+		where
+			username=#{username}
+	</update>
+
+	<insert id="addUser" parameterType="com.zhang.web.modules.sys.entity.SysUser" useGeneratedKeys="true" keyProperty="userId" >
+	    insert into sys_user
+	    (
+			username,
+			password,
+			realName,
+			roleId,
+			lastLoginDate,
+			lastLoginIp,
+			status,
+			email,
+			phone,
+			registDate
+	    )
+	    values
+	    (
+	    	#{username},
+		    #{password},
+		    #{realName},
+		    #{roleId},
+		    #{lastLoginDate},
+		    #{lastLoginIp},
+		    #{status},
+		    #{email},
+		    #{phone},
+		    NOW()
+	    )
+	</insert>
+
+</mapper>

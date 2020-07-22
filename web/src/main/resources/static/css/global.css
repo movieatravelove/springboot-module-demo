@@ -1,0 +1,16 @@
+html, body {width: 100%;margin:0;padding:0;}
+body {overflow-x: hidden;font-family: 'Open Sans', sans-serif; font-size:14px; color:#666;background-color:#f8f9fb;}
+ul,li{list-style: none;}
+a{color:#666;}
+a:hover, a:focus {text-decoration: none; color:#28b779;cursor: pointer;}
+.site-header{position:relative;color:#666;}
+.site-header .main-navbar{background-color:#fff;margin:0;border:none;}
+.site-header .main-navbar a{color:#666 !important;}
+
+
+
+.footer{color:#eee;margin-top:80px;}
+.footer a{color:#fff;border-bottom:dotted 1px #a9dfbf;}
+.footer .copy-right{height:50px;line-height:50px;margin-top:10px;text-align:center;}
+
+

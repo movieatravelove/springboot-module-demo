@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhang.api.modules.sys.mapper.SysUserMapper">
+
+	<sql id="Field">
+		userId,
+		username,
+		password,
+		realName,
+		roleId,
+		lastLoginDate,
+		lastLoginIp,
+		status,
+		email,
+		phone,
+		registDate,
+		source,
+		schoolId
+	</sql>
+
+
+	<!-- 通过USERNAME获取数据 -->
+	<select id="loadUserByUsername"  resultType="SysUser" >
+		SELECT
+		<include refid="Field"></include>
+		FROM
+		sys_user
+		WHERE
+		username = #{username}
+	</select>
+
+	<!-- 加载用户列表 -->
+	<select id="listUsersPage" parameterType="map"  resultType="SysUser" >
+		SELECT
+		<include refid="Field"></include>
+		FROM
+		sys_user
+
+	</select>
+
+
+</mapper>
