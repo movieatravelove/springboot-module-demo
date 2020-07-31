@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import net.sf.json.JSONObject;
 
 @Component
 public class WebInterceptor implements HandlerInterceptor {

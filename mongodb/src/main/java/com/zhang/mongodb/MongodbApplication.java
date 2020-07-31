@@ -1,4 +1,4 @@
-package com.zhang.common;
+package com.zhang.mongodb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,15 +7,16 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
-public class CommonApplication extends SpringBootServletInitializer {
+
+public class MongodbApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        SpringApplication.run(CommonApplication.class, args);
+        SpringApplication.run(MongodbApplication.class, args);
     }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(CommonApplication.class);
+        return application.sources(MongodbApplication.class);
     }
 
 }

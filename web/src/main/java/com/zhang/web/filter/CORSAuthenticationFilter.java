@@ -1,6 +1,6 @@
 package com.zhang.web.filter;
 
-import com.alibaba.fastjson.JSON;
+import net.sf.json.JSONArray;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class CORSAuthenticationFilter extends FormAuthenticationFilter {
         Map<String, Object> map= new HashMap<>();
         map.put("code", 500);
         map.put("message", "unLogin");
-        writer.write(JSON.toJSONString(map));
+        writer.write(JSONArray.fromObject(map).toString());
         writer.close();
         return false;
     }

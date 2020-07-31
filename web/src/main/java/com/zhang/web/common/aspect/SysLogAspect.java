@@ -1,12 +1,14 @@
 package com.zhang.web.common.aspect;
 
-import com.alibaba.fastjson.JSON;
 import com.zhang.web.common.annotation.SysLog;
 import com.zhang.web.modules.sys.entity.SysLogEntity;
 import com.zhang.web.modules.sys.service.SysLogService;
 import com.zhang.web.config.shiro.ShiroUtils;
 import com.zhang.web.utils.HttpContextUtils;
 import com.zhang.web.utils.IPUtils;
+import net.sf.json.JSON;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONString;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -31,6 +33,7 @@ public class SysLogAspect {
     private static Logger logger = LoggerFactory.getLogger(SysLogAspect.class);
     @Autowired
     private SysLogService sysLogService;
+
     @Pointcut("@annotation(com.zhang.web.common.annotation.SysLog)")
     public void logPointCut() {
     }
@@ -53,7 +56,7 @@ public class SysLogAspect {
 
         SysLogEntity sysLog = new SysLogEntity();
         SysLog syslog = method.getAnnotation(SysLog.class);
-        if(syslog != null){
+        if (syslog != null) {
             //注解上的描述
             sysLog.setOperation(syslog.value());
         }
@@ -65,10 +68,10 @@ public class SysLogAspect {
 
         //请求的参数
         Object[] args = joinPoint.getArgs();
-        try{
-            String params = JSON.toJSONString(args[0]);
+        try {
+            String params = JSONObject.fromObject(args[0]).toString();
             sysLog.setParams(params);
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -76,7 +79,7 @@ public class SysLogAspect {
         HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
         //设置IP地址
         sysLog.setIp(IPUtils.getIpAddr(request));
-        try{
+        try {
             //用户名
             String username = ShiroUtils.getUserEntity().getUsername();
             sysLog.setUsername(username);
@@ -85,10 +88,10 @@ public class SysLogAspect {
             //保存系统日志
             sysLogService.insert(sysLog);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        logger.info("saveSysLog:"+JSON.toJSONString(sysLog));
+        logger.info("saveSysLog:" + JSONObject.fromObject(sysLog).toString());
     }
 }
