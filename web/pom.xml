@@ -23,7 +23,7 @@
     <!-- 版本说明：这里统一管理依赖的版本号 -->
     <properties>
         <quartz.version>2.3.0</quartz.version>
-        <shiro.version>1.4.0</shiro.version>
+        <shiro.version>1.8.0</shiro.version>
         <aliyun.oss.version>2.5.0</aliyun.oss.version>
         <swagger.version>2.7.0</swagger.version>
         <kaptcha.version>0.0.9</kaptcha.version>
